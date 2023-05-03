@@ -5,9 +5,9 @@ This application is a command line tool used to remove image metadata in a selec
 # Warning ⚠️
 Important information I have no rights over the images, I use them only for demonstration purposes.
 
-## Screenshots
+## Showcase
 
-![App Screenshot](https://user-images.githubusercontent.com/69091361/235879077-83f84826-f807-4240-9c44-1ab254aaf1b8.mp4)
+https://user-images.githubusercontent.com/69091361/235879077-83f84826-f807-4240-9c44-1ab254aaf1b8.mp4
 
 ## Authors
 
