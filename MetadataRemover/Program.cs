@@ -170,7 +170,6 @@ namespace RemoveMetadata
             string outputDirectoryPath = Path.Combine(Path.GetDirectoryName(filePath), "WithoutMetadata");
             Directory.CreateDirectory(outputDirectoryPath);
 
-            // Escribe la imagen sin los metadatos en un archivo en el directorio de salida
             string newFilePath = Path.Combine(outputDirectoryPath, Path.GetFileNameWithoutExtension(filePath) + "-without-metadata" + Path.GetExtension(filePath));
             image.Quality = quality;
             image.Write(newFilePath);
