@@ -6,11 +6,17 @@ Diese Anwendung ist ein Befehlszeilentool zum Entfernen von Bildmetadaten in ein
 
 Wichtige Information Ich habe keine Rechte an den Bildern, ich verwende sie nur zu Demonstrationszwecken.
 
+# Übersetzung
+
+| 🇺🇸                  | 🇨🇳                                        | 🇹🇼                                         | 🇮🇳                  | 🇫🇷                        | 🇦🇪                     | 🇩🇪                    | 🇯🇵                      | 🇪🇸                     |
+| --------------------- | ------------------------------------------- | -------------------------------------------- | --------------------- | --------------------------- | ------------------------ | ----------------------- | ------------------------- | ------------------------ |
+| [Englisch](README.md) | [Vereinfachtes Chinesisch](README.zh-CN.md) | [traditionelles Chinesisch](README.zh-TW.md) | [Hindi](README.hi.md) | [Französisch](README.fr.md) | [Arabisch](README.ar.md) | [Deutsch](README.de.md) | [japanisch](README.ja.md) | [Spanisch](README.es.md) |
+
 ## Vitrine
 
 <https://user-images.githubusercontent.com/69091361/235879077-83f84826-f807-4240-9c44-1ab254aaf1b8.mp4>
 
-## Autoren
+## Authors
 
 -   [@qzxtu](https://www.github.com/qzxtu)
 
