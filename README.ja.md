@@ -4,13 +4,19 @@
 
 # 警告⚠️
 
-Important information I have no rights over the images, I use them only for demonstration purposes.
+重要な情報 私には画像に対する権利はなく、デモンストレーションの目的でのみ使用しています。
+
+# 翻訳
+
+| 🇺🇸            | 🇨🇳                      | 🇹🇼                    | 🇮🇳                   | 🇫🇷                  | 🇦🇪                | 🇩🇪                 | 🇯🇵                | 🇪🇸                  |
+| --------------- | ------------------------- | ----------------------- | ---------------------- | --------------------- | ------------------- | -------------------- | ------------------- | --------------------- |
+| [英語](README.md) | [簡体字中国語](README.zh-CN.md) | [繁体中文](README.zh-TW.md) | [ヒンディー語](README.hi.md) | [フランス語](README.fr.md) | [アラブ](README.ar.md) | [ドイツ人](README.de.md) | [日本語](README.ja.md) | [スペイン語](README.es.md) |
 
 ## ショーケース
 
 [hっtps://失せrー今げs。魏テュブセrコンテンt。小m/69091361/235879077ー83f84826ーf807ー4240ー9C44ー1あb254ああf1b8。MP4](https://user-images.githubusercontent.com/69091361/235879077-83f84826-f807-4240-9c44-1ab254aaf1b8.mp4)
 
-## 著者
+## Authors
 
 -   [@qzxtu](https://www.github.com/qzxtu)
 
