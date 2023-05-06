@@ -1,0 +1,19 @@
+# 元数据删除器
+
+此应用程序是一个命令行工具，用于删除选定目录中的图像元数据。该应用程序允许用户选择要删除或全部删除哪些元数据配置文件。输出图像的质量也可以调整。处理完每个文件后，应用程序将没有元数据的新图像写入原始图像目录中的子目录“Wi​​thoutMetadata”。该应用程序具有简单的用户界面，并使用 ImageMagick 库来处理图像。
+
+# 警告⚠️
+
+重要信息 我对这些图像没有任何权利，我仅将它们用于演示目的。
+
+## 展柜
+
+[HTTPS://user-images.GitHub user content.com/69091361/235879077-83发84826-发807-4240-9从44-1AB254啊啊发1不8.门票4](https://user-images.githubusercontent.com/69091361/235879077-83f84826-f807-4240-9c44-1ab254aaf1b8.mp4)
+
+## 作者
+
+-   [@qzxtu](https://www.github.com/qzxtu)
+
+## 执照
+
+[阿帕奇 2.0](https://choosealicense.com/licenses/apache-2.0/)
