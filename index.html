@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Metadata Remover</title>
+    <style>
+        body {
+            background-color: #1a202c;
+            color: #fff;
+        }
+        .backdrop-blur {
+            backdrop-filter: blur(10px);
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: center;
+            text-decoration: none;
+            white-space: nowrap;
+            border-radius: 0.25rem;
+            transition: all 0.15s ease-in-out;
+        }
+        .btn-primary {
+            background-color: #4a5568;
+            color: #fff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #2d3748;
+        }
+        .btn-download {
+            background-color: #38a169;
+            color: #fff;
+            border: none;
+        }
+        .btn-download:hover {
+            background-color: #2f855a;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="bg-gray-800 bg-opacity-80 backdrop-blur fixed top-0 left-0 right-0 z-10 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-white.svg" alt="Workflow">                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="mt-16 mx-auto">
+        <div class="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8 bg-gray-700 bg-opacity-80 rounded-lg shadow-md backdrop-blur">
+            <h1 class="text-center text-4xl font-bold mb-10 text-gray-300">Metadata Remover</h1>
+            <div class="flex justify-center mb-5">
+                <label for="fileInput" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 cursor-pointer">
+                    Select Image
+                </label>
+                <input type="file" id="fileInput" accept="image/*" class="hidden">
+            </div>
+            <canvas id="canvas" style="display: none;"></canvas>
+            <img id="output" class="mx-auto rounded-md shadow-md mb-5">
+            <div class="flex flex-col justify-center items-center mb-5">
+                <a id="downloadBtn" download class="btn btn-download mx-auto mb-2">Download</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const fileInput = document.querySelector('#fileInput');
+        const canvas = document.querySelector('#canvas');
+        const ctx = canvas.getContext('2d');
+        const output = document.querySelector('#output');
+        const downloadBtn = document.querySelector('#downloadBtn');
+        
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                const dataURL = canvas.toDataURL();
+                output.src = dataURL;
+                downloadBtn.href = dataURL;
+                downloadBtn.download = file.name.replace(/\.[^/.]+$/, "") + "-no-metadata.png";
+            };
+        });
+    </script>
+</body>
+</html>
