@@ -1,4 +1,4 @@
-# Metadata Remover
+# Metadaten-Entferner
 
 Bei dieser Anwendung handelt es sich um ein Befehlszeilentool zum Entfernen von Bildmetadaten in einem ausgewählten Verzeichnis. Mit der Anwendung kann der Benutzer auswählen, welche Metadatenprofile gelöscht werden sollen, oder alle löschen. Die Qualität des Ausgabebildes kann ebenfalls angepasst werden. Nach der Verarbeitung jeder Datei schreibt die Anwendung das neue Bild ohne Metadaten in ein Unterverzeichnis „WithoutMetadata“ innerhalb des ursprünglichen Bildverzeichnisses. Die Anwendung verfügt über eine einfache Benutzeroberfläche und nutzt die ImageMagick-Bibliothek zur Verarbeitung der Bilder.
 
