@@ -1,6 +1,8 @@
+![image](https://github.com/user-attachments/assets/af677ca5-b660-4bb7-9421-fde3bf73dd7f)
+
 # メタデータリムーバー
 
-このアプリケーションは、選択したディレクトリ内の画像メタデータを削除するために使用されるコマンドラインツールです。アプリケーションを使用すると、ユーザーはすべてを削除または削除するメタデータプロファイルを選択できます。出力画像の品質も調整できます。各ファイルを処理した後、アプリケーションは、メタデータなしで新しい画像を、元の画像ディレクトリ内のサブディレクトリ「メタダタなし」に書き込みます。アプリケーションにはシンプルなユーザーインターフェイスがあり、ImageMagickライブラリを使用して画像を処理します。
+This application is a command line tool used to remove image metadata in a selected directory. The application allows the user to choose which metadata profiles to delete or delete them all. The quality of the output image can also be adjusted. After processing each file, the application writes the new image without metadata to a subdirectory "WithoutMetadata" within the original directory of images. The application has a simple user interface and uses the ImageMagick library to process the images.
 
 # 警告⚠️
 
@@ -18,7 +20,7 @@
 
 ## 著者
 
--   [@qzxtu](https://www.github.com/qzxtu)
+-   [@ fl2ons](https://www.github.com/fl2on)
 
 ## ライセンス
 
