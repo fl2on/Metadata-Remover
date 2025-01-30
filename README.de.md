@@ -1,6 +1,8 @@
+![image](https://github.com/user-attachments/assets/af677ca5-b660-4bb7-9421-fde3bf73dd7f)
+
 # Metadatenentferner
 
-Diese Anwendung ist ein Befehlszeilen -Tool, mit dem Bildmetadaten in einem ausgewählten Verzeichnis entfernt werden. Mit der Anwendung kann der Benutzer auswählen, welche Metadatenprofile sie alle löschen oder löschen sollen. Die Qualität des Ausgangsbildes kann ebenfalls eingestellt werden. Nach der Verarbeitung jeder Datei schreibt die Anwendung das neue Bild ohne Metadaten in ein Unterverzeichnis "ohne MetadaData" im ursprünglichen Bildverzeichnis. Die Anwendung verfügt über eine einfache Benutzeroberfläche und verwendet die ImageMagick -Bibliothek, um die Bilder zu verarbeiten.
+This application is a command line tool used to remove image metadata in a selected directory. The application allows the user to choose which metadata profiles to delete or delete them all. The quality of the output image can also be adjusted. After processing each file, the application writes the new image without metadata to a subdirectory "WithoutMetadata" within the original directory of images. The application has a simple user interface and uses the ImageMagick library to process the images.
 
 # Warnung ⚠️
 
@@ -8,9 +10,9 @@ Wichtige Informationen Ich habe keine Rechte über die Bilder, ich verwende sie 
 
 # Übersetzung
 
-| 🇺🇸                  | 🇨🇳                                        | 🇹🇼                                         | 🇮🇳                  | 🇫🇷                        | 🇦🇪                 | 🇩🇪                    | 🇯🇵                      | 🇪🇸                     |
-| --------------------- | ------------------------------------------- | -------------------------------------------- | --------------------- | --------------------------- | -------------------- | ----------------------- | ------------------------- | ------------------------ |
-| [Englisch](README.md) | [Vereinfachtes Chinesisch](README.zh-CN.md) | [Traditionelles Chinesisch](README.zh-TW.md) | [Hindi](README.hi.md) | [Französisch](README.fr.md) | [عربى](README.ar.md) | [Deutsch](README.de.md) | [japanisch](README.ja.md) | [Spanisch](README.es.md) |
+| 🇺🇸                  | 🇨🇳                                        | 🇹🇼                                         | 🇮🇳                  | 🇫🇷                        | 🇦🇪                   | 🇩🇪                    | 🇯🇵                      | 🇪🇸                     |
+| --------------------- | ------------------------------------------- | -------------------------------------------- | --------------------- | --------------------------- | ---------------------- | ----------------------- | ------------------------- | ------------------------ |
+| [Englisch](README.md) | [Vereinfachtes Chinesisch](README.zh-CN.md) | [Traditionelles Chinesisch](README.zh-TW.md) | [Hindi](README.hi.md) | [Französisch](README.fr.md) | [Araber](README.ar.md) | [Deutsch](README.de.md) | [japanisch](README.ja.md) | [Spanisch](README.es.md) |
 
 ## Showcase
 
@@ -18,7 +20,7 @@ Wichtige Informationen Ich habe keine Rechte über die Bilder, ich verwende sie 
 
 ## Autoren
 
--   [@qzxtu](https://www.github.com/qzxtu)
+-   [@ FL2ons](https://www.github.com/fl2on)
 
 ## Lizenz
 
