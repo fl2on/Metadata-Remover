@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/af677ca5-b660-4bb7-9421-fde3bf73dd7f)
+
 # Removedor de metadatos
 
 Esta aplicación es una herramienta de línea de comando utilizada para eliminar los metadatos de imagen en un directorio seleccionado. La aplicación permite al usuario elegir qué perfiles de metadatos eliminarlos o eliminarlos todos. La calidad de la imagen de salida también se puede ajustar. Después de procesar cada archivo, la aplicación escribe la nueva imagen sin metadatos en un subdirectorio "sin metadata" dentro del directorio original de imágenes. La aplicación tiene una interfaz de usuario simple y utiliza la biblioteca ImageMagick para procesar las imágenes.
@@ -18,7 +20,7 @@ Información importante No tengo derechos sobre las imágenes, las uso solo para
 
 ## Autores
 
--   [@qzxtu](https://www.github.com/qzxtu)
+-   [@ fl2ons](https://www.github.com/fl2on)
 
 ## Licencia
 
