@@ -2,7 +2,7 @@
 
 # Dissolvant des métadonnées
 
-This application is a command line tool used to remove image metadata in a selected directory. The application allows the user to choose which metadata profiles to delete or delete them all. The quality of the output image can also be adjusted. After processing each file, the application writes the new image without metadata to a subdirectory "WithoutMetadata" within the original directory of images. The application has a simple user interface and uses the ImageMagick library to process the images.
+Cette application est un outil de ligne de commande utilisé pour supprimer les métadonnées de l'image dans un répertoire sélectionné. L'application permet à l'utilisateur de choisir les profils de métadonnées pour les supprimer ou les supprimer tous. La qualité de l'image de sortie peut également être ajustée. Après avoir traité chaque fichier, l'application écrit la nouvelle image sans métadonnées vers un sous-répertoire "sans métadata" dans le répertoire d'images d'origine. L'application a une interface utilisateur simple et utilise la bibliothèque ImageMagick pour traiter les images.
 
 # Avertissement ⚠️
 
