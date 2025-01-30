@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/af677ca5-b660-4bb7-9421-fde3bf73dd7f)
+
 # 元数据去除剂
 
 此应用程序是一种命令行工具，用于删除所选目录中的图像元数据。该应用程序允许用户选择用于删除或删除的元数据配置文件。输出图像的质量也可以调整。处理每个文件后，应用程序将新图像写入没有元数据的新图像将图像的原始目录中的子目录“无元数据”写入。该应用程序具有简单的用户界面，并使用ImageMagick库来处理图像。
@@ -18,7 +20,7 @@
 
 ## 作者
 
--   [@qzxtu](https://www.github.com/qzxtu)
+-   [@ fl2ons](https://www.github.com/fl2on)
 
 ## 执照
 
