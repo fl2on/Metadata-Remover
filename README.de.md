@@ -1,18 +1,18 @@
-# Metadaten-Entferner
+# Metadatenentferner
 
-Bei dieser Anwendung handelt es sich um ein Befehlszeilentool zum Entfernen von Bildmetadaten in einem ausgewählten Verzeichnis. Mit der Anwendung kann der Benutzer auswählen, welche Metadatenprofile gelöscht werden sollen, oder alle löschen. Die Qualität des Ausgabebildes kann ebenfalls angepasst werden. Nach der Verarbeitung jeder Datei schreibt die Anwendung das neue Bild ohne Metadaten in ein Unterverzeichnis „WithoutMetadata“ innerhalb des ursprünglichen Bildverzeichnisses. Die Anwendung verfügt über eine einfache Benutzeroberfläche und nutzt die ImageMagick-Bibliothek zur Verarbeitung der Bilder.
+Diese Anwendung ist ein Befehlszeilen -Tool, mit dem Bildmetadaten in einem ausgewählten Verzeichnis entfernt werden. Mit der Anwendung kann der Benutzer auswählen, welche Metadatenprofile sie alle löschen oder löschen sollen. Die Qualität des Ausgangsbildes kann ebenfalls eingestellt werden. Nach der Verarbeitung jeder Datei schreibt die Anwendung das neue Bild ohne Metadaten in ein Unterverzeichnis "ohne MetadaData" im ursprünglichen Bildverzeichnis. Die Anwendung verfügt über eine einfache Benutzeroberfläche und verwendet die ImageMagick -Bibliothek, um die Bilder zu verarbeiten.
 
-# Achtung ⚠️
+# Warnung ⚠️
 
-Wichtiger Hinweis: Ich habe keine Rechte an den Bildern, ich verwende sie nur zu Demonstrationszwecken.
+Wichtige Informationen Ich habe keine Rechte über die Bilder, ich verwende sie nur für Demonstrationszwecke.
 
 # Übersetzung
 
-| 🇺🇸                  | 🇨🇳                                        | 🇹🇼                                         | 🇮🇳                  | 🇫🇷                        | 🇦🇪                   | 🇩🇪                    | 🇯🇵                      | 🇪🇸                     |
-| --------------------- | ------------------------------------------- | -------------------------------------------- | --------------------- | --------------------------- | ---------------------- | ----------------------- | ------------------------- | ------------------------ |
-| [Englisch](README.md) | [Vereinfachtes Chinesisch](README.zh-CN.md) | [traditionelles Chinesisch](README.zh-TW.md) | [Hindi](README.hi.md) | [Französisch](README.fr.md) | [Araber](README.ar.md) | [Deutsch](README.de.md) | [japanisch](README.ja.md) | [Spanisch](README.es.md) |
+| 🇺🇸                  | 🇨🇳                                        | 🇹🇼                                         | 🇮🇳                  | 🇫🇷                        | 🇦🇪                 | 🇩🇪                    | 🇯🇵                      | 🇪🇸                     |
+| --------------------- | ------------------------------------------- | -------------------------------------------- | --------------------- | --------------------------- | -------------------- | ----------------------- | ------------------------- | ------------------------ |
+| [Englisch](README.md) | [Vereinfachtes Chinesisch](README.zh-CN.md) | [Traditionelles Chinesisch](README.zh-TW.md) | [Hindi](README.hi.md) | [Französisch](README.fr.md) | [عربى](README.ar.md) | [Deutsch](README.de.md) | [japanisch](README.ja.md) | [Spanisch](README.es.md) |
 
-## Vitrine
+## Showcase
 
 <https://user-images.githubusercontent.com/69091361/235879077-83f84826-f807-4240-9c44-1ab254aaf1b8.mp4>
 
