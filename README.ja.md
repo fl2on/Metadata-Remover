@@ -20,7 +20,7 @@
 
 ## 著者
 
--   [@fl2on](https://www.github.com/fl2on)
+-   [@ fl2ons](https://www.github.com/fl2on)
 
 ## ライセンス
 
