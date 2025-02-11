@@ -2,7 +2,7 @@
 
 # मेटाडेटा रिमूवर
 
-यह एप्लिकेशन एक कमांड लाइन टूल है जिसका उपयोग चयनित निर्देशिका में छवि मेटाडेटा को हटाने के लिए किया जाता है। एप्लिकेशन उपयोगकर्ता को यह चुनने की अनुमति देता है कि उन सभी को हटाने या हटाने के लिए कौन से मेटाडेटा प्रोफाइल चुनें। आउटपुट छवि की गुणवत्ता को भी समायोजित किया जा सकता है। प्रत्येक फ़ाइल को संसाधित करने के बाद, एप्लिकेशन छवियों के मूल निर्देशिका के भीतर एक उपनिर्देशिका "विदाउटमेटाटाटा" के लिए मेटाडेटा के बिना नई छवि लिखता है। एप्लिकेशन में एक साधारण उपयोगकर्ता इंटरफ़ेस होता है और छवियों को संसाधित करने के लिए इमेजमैगिक लाइब्रेरी का उपयोग करता है।
+This application is a command line tool used to remove image metadata in a selected directory. The application allows the user to choose which metadata profiles to delete or delete them all. The quality of the output image can also be adjusted. After processing each file, the application writes the new image without metadata to a subdirectory "WithoutMetadata" within the original directory of images. The application has a simple user interface and uses the ImageMagick library to process the images.
 
 # चेतावनी ⚠
 
