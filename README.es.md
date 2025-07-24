@@ -6,7 +6,7 @@ Esta aplicación es una herramienta de línea de comando utilizada para eliminar
 
 # ADVERTENCIA ⚠️
 
-Información importante No tengo derechos sobre las imágenes, las uso solo para fines de demostración.
+Important information I have no rights over the images, I use them only for demonstration purposes.
 
 # Traducción
 
