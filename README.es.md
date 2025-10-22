@@ -18,6 +18,10 @@ Información importante No tengo derechos sobre las imágenes, las uso sólo con
 
 <https://user-images.githubusercontent.com/69091361/235879077-83f84826-f807-4240-9c44-1ab254aaf1b8.mp4>
 
+## Captura de pantalla del sitio web
+
+![image](https://github.com/user-attachments/assets/5dfaf64c-2672-4777-a78b-c222838a3de7)
+
 ## Autores
 
 -   [@fl2on](https://www.github.com/fl2on)
