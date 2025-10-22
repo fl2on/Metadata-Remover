@@ -1,12 +1,12 @@
 ![image](https://github.com/user-attachments/assets/af677ca5-b660-4bb7-9421-fde3bf73dd7f)
 
-# Metadatenentferner
+# Metadaten-Entferner
 
-This application is a command line tool used to remove image metadata in a selected directory. The application allows the user to choose which metadata profiles to delete or delete them all. The quality of the output image can also be adjusted. After processing each file, the application writes the new image without metadata to a subdirectory "WithoutMetadata" within the original directory of images. The application has a simple user interface and uses the ImageMagick library to process the images.
+Bei dieser Anwendung handelt es sich um ein Befehlszeilentool zum Entfernen von Bildmetadaten in einem ausgewählten Verzeichnis. Mit der Anwendung kann der Benutzer auswählen, welche Metadatenprofile gelöscht werden sollen, oder alle löschen. Die Qualität des Ausgabebildes kann ebenfalls angepasst werden. Nach der Verarbeitung jeder Datei schreibt die Anwendung das neue Bild ohne Metadaten in ein Unterverzeichnis „WithoutMetadata“ innerhalb des ursprünglichen Bildverzeichnisses. Die Anwendung verfügt über eine einfache Benutzeroberfläche und nutzt die ImageMagick-Bibliothek zur Verarbeitung der Bilder.
 
-# Warnung ⚠️
+# Achtung ⚠️
 
-Wichtige Informationen Ich habe keine Rechte über die Bilder, ich verwende sie nur für Demonstrationszwecke.
+Wichtiger Hinweis: Ich habe keine Rechte an den Bildern, ich verwende sie nur zu Demonstrationszwecken.
 
 # Übersetzung
 
@@ -14,13 +14,13 @@ Wichtige Informationen Ich habe keine Rechte über die Bilder, ich verwende sie 
 | --------------------- | ------------------------------------------- | -------------------------------------------- | --------------------- | --------------------------- | ---------------------- | ----------------------- | ------------------------- | ------------------------ |
 | [Englisch](README.md) | [Vereinfachtes Chinesisch](README.zh-CN.md) | [Traditionelles Chinesisch](README.zh-TW.md) | [Hindi](README.hi.md) | [Französisch](README.fr.md) | [Araber](README.ar.md) | [Deutsch](README.de.md) | [japanisch](README.ja.md) | [Spanisch](README.es.md) |
 
-## Showcase
+## Vitrine
 
 <https://user-images.githubusercontent.com/69091361/235879077-83f84826-f807-4240-9c44-1ab254aaf1b8.mp4>
 
 ## Autoren
 
--   [@ FL2ons](https://www.github.com/fl2on)
+-   [@fl2on](https://www.github.com/fl2on)
 
 ## Lizenz
 
