@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Metadata Shield - Image Metadata Remover",
+  "version": "2.0.0",
+  "description": "Upload and remove metadata from images manually. Protect your privacy by cleaning EXIF, GPS, and other sensitive data.",
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon.png",
+      "32": "icons/icon.png",
+      "48": "icons/icon.png",
+      "128": "icons/icon.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon.png",
+    "32": "icons/icon.png",
+    "48": "icons/icon.png",
+    "128": "icons/icon.png"
+  }
+}
