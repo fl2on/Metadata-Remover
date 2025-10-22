@@ -1,8 +1,8 @@
 ![image](https://github.com/user-attachments/assets/af677ca5-b660-4bb7-9421-fde3bf73dd7f)
 
-# Metadata Remover
+# 元数据删除器
 
-This application is a command line tool used to remove image metadata in a selected directory. The application allows the user to choose which metadata profiles to delete or delete them all. The quality of the output image can also be adjusted. After processing each file, the application writes the new image without metadata to a subdirectory "WithoutMetadata" within the original directory of images. The application has a simple user interface and uses the ImageMagick library to process the images.
+该应用程序是一个命令行工具，用于删除选定目录中的图像元数据。该应用程序允许用户选择要删除哪些元数据配置文件或全部删除。输出图像的质量也可以调整。处理每个文件后，应用程序将不带元数据的新图像写入原始图像目录中的子目录“Wi​​thoutMetadata”。该应用程序具有简单的用户界面，并使用 ImageMagick 库来处理图像。
 
 # 警告⚠️
 
