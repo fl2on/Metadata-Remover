@@ -2,7 +2,7 @@
 
 # Suppresseur de métadonnées
 
-Cette application est un outil de ligne de commande utilisé pour supprimer les métadonnées d'image dans un répertoire sélectionné. L'application permet à l'utilisateur de choisir les profils de métadonnées à supprimer ou de tous les supprimer. La qualité de l'image de sortie peut également être ajustée. Après avoir traité chaque fichier, l'application écrit la nouvelle image sans métadonnées dans un sous-répertoire "WithoutMetadata" au sein du répertoire d'images d'origine. L'application dispose d'une interface utilisateur simple et utilise la bibliothèque ImageMagick pour traiter les images.
+This application is a command line tool used to remove image metadata in a selected directory. The application allows the user to choose which metadata profiles to delete or delete them all. The quality of the output image can also be adjusted. After processing each file, the application writes the new image without metadata to a subdirectory "WithoutMetadata" within the original directory of images. The application has a simple user interface and uses the ImageMagick library to process the images.
 
 # Attention ⚠️
 
@@ -17,6 +17,10 @@ Informations importantes Je n'ai aucun droit sur les images, je les utilise uniq
 ## Vitrine
 
 <https://user-images.githubusercontent.com/69091361/235879077-83f84826-f807-4240-9c44-1ab254aaf1b8.mp4>
+
+## Capture d'écran du site Web
+
+![image](https://github.com/user-attachments/assets/5dfaf64c-2672-4777-a78b-c222838a3de7)
 
 ## Auteurs
 
