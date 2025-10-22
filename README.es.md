@@ -1,18 +1,18 @@
 ![image](https://github.com/user-attachments/assets/af677ca5-b660-4bb7-9421-fde3bf73dd7f)
 
-# Removedor de metadatos
+# Eliminador de metadatos
 
-Esta aplicación es una herramienta de línea de comando utilizada para eliminar los metadatos de imagen en un directorio seleccionado. La aplicación permite al usuario elegir qué perfiles de metadatos eliminarlos o eliminarlos todos. La calidad de la imagen de salida también se puede ajustar. Después de procesar cada archivo, la aplicación escribe la nueva imagen sin metadatos en un subdirectorio "sin metadata" dentro del directorio original de imágenes. La aplicación tiene una interfaz de usuario simple y utiliza la biblioteca ImageMagick para procesar las imágenes.
+Esta aplicación es una herramienta de línea de comandos que se utiliza para eliminar metadatos de imágenes en un directorio seleccionado. La aplicación permite al usuario elegir qué perfiles de metadatos eliminar o eliminarlos todos. También se puede ajustar la calidad de la imagen de salida. Después de procesar cada archivo, la aplicación escribe la nueva imagen sin metadatos en un subdirectorio "SinMetadatos" dentro del directorio original de imágenes. La aplicación tiene una interfaz de usuario sencilla y utiliza la biblioteca ImageMagick para procesar las imágenes.
 
-# ADVERTENCIA ⚠️
+# Advertencia ⚠️
 
-Información importante No tengo derechos sobre las imágenes, las uso solo para fines de demostración.
+Información importante No tengo derechos sobre las imágenes, las uso sólo con fines demostrativos.
 
 # Traducción
 
 | 🇺🇸                | 🇨🇳                                  | 🇹🇼                                 | 🇮🇳                  | 🇫🇷                    | 🇦🇪                  | 🇩🇪                   | 🇯🇵                    | 🇪🇸                    |
 | ------------------- | ------------------------------------- | ------------------------------------ | --------------------- | ----------------------- | --------------------- | ---------------------- | ----------------------- | ----------------------- |
-| [Inglés](README.md) | [Chino simplificado](README.zh-CN.md) | [Chino tradicional](README.zh-TW.md) | [hindi](README.hi.md) | [Francés](README.fr.md) | [árabe](README.ar.md) | [Alemán](README.de.md) | [japonés](README.ja.md) | [Español](README.es.md) |
+| [Inglés](README.md) | [Chino simplificado](README.zh-CN.md) | [chino tradicional](README.zh-TW.md) | [hindi](README.hi.md) | [Francés](README.fr.md) | [árabe](README.ar.md) | [Alemán](README.de.md) | [japonés](README.ja.md) | [Español](README.es.md) |
 
 ## Escaparate
 
@@ -20,8 +20,8 @@ Información importante No tengo derechos sobre las imágenes, las uso solo para
 
 ## Autores
 
--   [@ fl2ons](https://www.github.com/fl2on)
+-   [@fl2on](https://www.github.com/fl2on)
 
 ## Licencia
 
-[Apache 2.0](https://choosealicense.com/licenses/apache-2.0/)
+[apache 2.0](https://choosealicense.com/licenses/apache-2.0/)
