@@ -1585,3 +1585,226 @@ if (installExtensionBtn) {
     }
   });
 }
+
+// ============================================
+// SMART EXTENSION INSTALLATION
+// ============================================
+function initSmartExtension() {
+  const installBtn = document.getElementById("installExtensionBtn");
+  const extensionStatus = document.getElementById("extensionStatus");
+  const btnText = document.getElementById("extensionBtnText");
+  
+  if (!installBtn) return;
+  
+  const EXTENSION_URL = "https://github.com/fl2on/Metadata-Remover/releases/tag/master";
+  
+  // Detect browser
+  function detectBrowser() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.includes("edg")) return "edge";
+    if (userAgent.includes("chrome") && !userAgent.includes("edg")) return "chrome";
+    if (userAgent.includes("firefox")) return "firefox";
+    if (userAgent.includes("safari") && !userAgent.includes("chrome")) return "safari";
+    if (userAgent.includes("opera") || userAgent.includes("opr")) return "opera";
+    return "unknown";
+  }
+  
+  // Check if extension is already installed
+  function checkExtensionInstalled() {
+    // Try to detect if extension is installed by checking for a custom element/message
+    return new Promise((resolve) => {
+      const timeout = setTimeout(() => resolve(false), 100);
+      
+      // Send message to extension if it exists
+      if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.sendMessage) {
+        try {
+          chrome.runtime.sendMessage("extension-id-here", { type: "ping" }, (response) => {
+            clearTimeout(timeout);
+            resolve(!!response);
+          });
+        } catch (e) {
+          clearTimeout(timeout);
+          resolve(false);
+        }
+      } else {
+        clearTimeout(timeout);
+        resolve(false);
+      }
+    });
+  }
+  
+  // Update UI based on browser and installation status
+  async function updateExtensionUI() {
+    const browser = detectBrowser();
+    const isInstalled = await checkExtensionInstalled();
+    
+    if (isInstalled) {
+      installBtn.classList.remove("btn-primary");
+      installBtn.classList.add("btn-success");
+      btnText.textContent = "Extension Installed ✓";
+      installBtn.disabled = true;
+      extensionStatus.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        Your browser extension is active and protecting your uploads
+      `;
+      extensionStatus.style.color = "var(--success)";
+      extensionStatus.style.display = "block";
+      return;
+    }
+    
+    // Not installed - show browser-specific message
+    const browserMessages = {
+      chrome: "Available for Chrome",
+      edge: "Available for Edge",
+      firefox: "Available for Firefox",
+      opera: "Available for Opera",
+      safari: "Safari version coming soon",
+      unknown: "Install Extension"
+    };
+    
+    const browserIcons = {
+      chrome: "🌐",
+      edge: "🌐",
+      firefox: "🦊",
+      opera: "🎭",
+      safari: "🧭",
+      unknown: "📦"
+    };
+    
+    btnText.textContent = browserMessages[browser] || browserMessages.unknown;
+    
+    if (browser === "safari") {
+      installBtn.disabled = true;
+      // Only update if instructions haven't been shown
+      if (!instructionsShown) {
+        extensionStatus.textContent = "Safari extension is currently in development. Use Chrome, Edge, or Firefox for now.";
+        extensionStatus.style.color = "var(--text-secondary)";
+        extensionStatus.style.display = "block";
+      }
+    } else {
+      // Only update if instructions haven't been shown
+      if (!instructionsShown) {
+        extensionStatus.innerHTML = `
+          ${browserIcons[browser]} Click to download and install the extension for your browser
+        `;
+        extensionStatus.style.color = "var(--text-secondary)";
+        extensionStatus.style.display = "block";
+      }
+    }
+  }
+  
+  // Track if instructions have been shown
+  let instructionsShown = false;
+  
+  // Handle installation click
+  installBtn.addEventListener("click", async () => {
+    const browser = detectBrowser();
+    
+    if (browser === "safari") {
+      return;
+    }
+    
+    // Mark that instructions are now shown
+    instructionsShown = true;
+    
+    // Show installation instructions immediately
+    extensionStatus.innerHTML = `
+      <div style="text-align: left; padding: 2rem; background: rgba(17, 17, 24, 0.7); border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.2);">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+          <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+            📦
+          </div>
+          <div>
+            <h4 style="margin: 0; font-size: 1.1rem; color: #f9fafb; font-weight: 600;">Quick Installation Guide</h4>
+            <p style="margin: 0.25rem 0 0 0; font-size: 0.875rem; color: #d1d5db;">Follow these steps to install the extension</p>
+          </div>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <div style="display: flex; gap: 0.75rem; padding: 0.75rem; background: rgba(30, 30, 40, 0.5); border-radius: 8px; border-left: 3px solid #6366f1;">
+            <span style="flex-shrink: 0; width: 24px; height: 24px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">1</span>
+            <span style="line-height: 1.5; color: #d1d5db;">Download the extension from the opened GitHub page</span>
+          </div>
+          
+          <div style="display: flex; gap: 0.75rem; padding: 0.75rem; background: rgba(30, 30, 40, 0.5); border-radius: 8px; border-left: 3px solid #8b5cf6;">
+            <span style="flex-shrink: 0; width: 24px; height: 24px; background: #8b5cf6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">2</span>
+            <span style="line-height: 1.5; color: #d1d5db;">Extract the ZIP file to a permanent location on your computer</span>
+          </div>
+          
+          <div style="display: flex; gap: 0.75rem; padding: 0.75rem; background: rgba(30, 30, 40, 0.5); border-radius: 8px; border-left: 3px solid #06b6d4;">
+            <span style="flex-shrink: 0; width: 24px; height: 24px; background: #06b6d4; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">3</span>
+            <div style="flex: 1;">
+              <div style="margin-bottom: 0.5rem; line-height: 1.5; color: #d1d5db;">Open your browser's extensions page:</div>
+              <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-left: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <strong style="color: #818cf8; font-size: 0.9rem;">Chrome:</strong>
+                  <code style="background: rgba(99, 102, 241, 0.15); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.85rem; color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3);">chrome://extensions</code>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <strong style="color: #818cf8; font-size: 0.9rem;">Edge:</strong>
+                  <code style="background: rgba(99, 102, 241, 0.15); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.85rem; color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3);">edge://extensions</code>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                  <strong style="color: #06b6d4; font-size: 0.9rem;">Firefox:</strong>
+                  <code style="background: rgba(6, 182, 212, 0.15); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.85rem; color: #06b6d4; border: 1px solid rgba(6, 182, 212, 0.3);">about:addons</code>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div style="display: flex; gap: 0.75rem; padding: 0.75rem; background: rgba(30, 30, 40, 0.5); border-radius: 8px; border-left: 3px solid #818cf8;">
+            <span style="flex-shrink: 0; width: 24px; height: 24px; background: #818cf8; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">4</span>
+            <span style="line-height: 1.5; color: #d1d5db;">Enable <strong style="color: #8b5cf6;">"Developer mode"</strong> (toggle switch in top-right corner)</span>
+          </div>
+          
+          <div style="display: flex; gap: 0.75rem; padding: 0.75rem; background: rgba(30, 30, 40, 0.5); border-radius: 8px; border-left: 3px solid #6366f1;">
+            <span style="flex-shrink: 0; width: 24px; height: 24px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">5</span>
+            <span style="line-height: 1.5; color: #d1d5db;">Click <strong style="color: #8b5cf6;">"Load unpacked"</strong> button and select the extracted folder</span>
+          </div>
+          
+          <div style="display: flex; gap: 0.75rem; padding: 0.75rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.3); margin-top: 0.5rem;">
+            <span style="flex-shrink: 0; width: 24px; height: 24px; background: #10b981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem;">✓</span>
+            <span style="line-height: 1.5; color: #10b981; font-weight: 600;">Refresh this page to verify installation!</span>
+          </div>
+        </div>
+      </div>
+    `;
+    extensionStatus.style.color = "var(--primary)";
+    extensionStatus.style.display = "block";
+    
+    // Update button
+    btnText.textContent = "Opening GitHub...";
+    installBtn.disabled = true;
+    
+    // Small delay before opening (so user sees instructions first)
+    setTimeout(() => {
+      // Open extension page in new tab
+      window.open(EXTENSION_URL, "_blank");
+      
+      // Update button after opening
+      installBtn.disabled = false;
+      btnText.textContent = "Open Instructions Again";
+      
+      // Change button behavior to show instructions again
+      installBtn.onclick = (e) => {
+        e.preventDefault();
+        window.open(EXTENSION_URL, "_blank");
+      };
+    }, 800);
+  });
+  
+  // Initialize
+  updateExtensionUI();
+  
+  // Check periodically if extension gets installed
+  setInterval(updateExtensionUI, 5000);
+}
+
+// Initialize when DOM is ready
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initSmartExtension);
+} else {
+  initSmartExtension();
+}
