@@ -18,7 +18,7 @@
 
 <https://user-images.githubusercontent.com/69091361/235879077-83f84826-f807-4240-9c44-1ab254aaf1b8.mp4>
 
-## Website ScreenShot
+## لقطة شاشة للموقع
 
 ![image](https://github.com/user-attachments/assets/5dfaf64c-2672-4777-a78b-c222838a3de7)
 
