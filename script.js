@@ -135,14 +135,45 @@ async function animateProcessing() {
   const steps = document.querySelectorAll(".step");
   const progressFill = document.getElementById("progressFill");
   const texts = ["Reading your image...", "Extracting metadata...", "Removing sensitive data...", "Finalizing clean image..."];
+  
+  // If no steps found, exit early
+  if (steps.length === 0) return;
+  
+  // Reset all steps first
+  steps.forEach(step => {
+    step.classList.remove("active", "complete");
+  });
+  if (progressFill) {
+    progressFill.style.transition = "none";
+    progressFill.style.width = "0%";
+    void progressFill.offsetWidth; // Force reflow
+  }
+  
   for (let i = 0; i < steps.length; i++) {
     steps[i].classList.add("active");
-    if (progressFill) progressFill.style.width = ((i + 1) / steps.length * 100) + "%";
+    
     const txt = document.getElementById("processingText");
-    if (txt) txt.textContent = texts[i];
-    await new Promise(r => setTimeout(r, 600));
+    if (txt && texts[i]) txt.textContent = texts[i];
+    
+    // Wait a bit before starting progress animation
+    await new Promise(r => setTimeout(r, 100));
+    
+    // Animate progress bar to complete this step
+    if (progressFill) {
+      const targetWidth = ((i + 1) / steps.length * 100);
+      progressFill.style.transition = "width 0.5s cubic-bezier(0.4, 0, 0.2, 1)";
+      progressFill.style.width = targetWidth + "%";
+    }
+    
+    // Wait for the progress bar animation to complete
+    await new Promise(r => setTimeout(r, 500));
+    
+    // Now mark step as complete
     steps[i].classList.remove("active");
     steps[i].classList.add("complete");
+    
+    // Short pause before next step
+    await new Promise(r => setTimeout(r, 100));
   }
 }
 
@@ -156,12 +187,16 @@ async function handleFile(file) {
   if (processingUI) processingUI.style.display = "block";
   if (resultUI) resultUI.style.display = "none";
   try {
-    animateProcessing();
+    // Wait for animation to complete before processing
+    await animateProcessing();
+    
     extractedMetadata = await extractMetadata(file);
     originalImageUrl = URL.createObjectURL(file);
     processedFile = await removeMetadata(file);
     cleanImageUrl = URL.createObjectURL(processedFile);
-    await new Promise(r => setTimeout(r, 2500));
+    
+    // Small delay before showing results
+    await new Promise(r => setTimeout(r, 300));
     displayResults();
   } catch (error) {
     console.error(error);
@@ -190,19 +225,85 @@ async function removeMetadata(file) {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     const img = new Image();
+    
     img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
-      canvas.toBlob((blob) => {
-        resolve(new File([blob], file.name.replace(/\.[^/.]+$/, "") + "_clean.png", { type: "image/png" }));
-      }, "image/png", 0.95);
+      try {
+        // Set canvas dimensions
+        canvas.width = img.naturalWidth || img.width;
+        canvas.height = img.naturalHeight || img.height;
+        
+        // Clear any previous content
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Disable image smoothing to preserve quality
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        
+        // Draw the image on canvas (this strips all metadata)
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        
+        // Convert to blob with high quality
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error("Failed to create blob"));
+            return;
+          }
+          
+          // Create clean filename
+          const originalName = file.name.replace(/\.[^/.]+$/, "");
+          const cleanFileName = originalName + "_clean.png";
+          
+          // Create new file without any metadata
+          const cleanFile = new File([blob], cleanFileName, { 
+            type: "image/png",
+            lastModified: Date.now()
+          });
+          
+          resolve(cleanFile);
+        }, "image/png", 1.0); // Use maximum quality
+        
+      } catch (error) {
+        reject(error);
+      }
     };
-    img.onerror = reject;
-    const reader = new FileReader();
-    reader.onload = (e) => img.src = e.target.result;
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
+    
+    img.onerror = () => reject(new Error("Failed to load image"));
+    
+    // Create object URL instead of data URL for better memory handling
+    const imageUrl = URL.createObjectURL(file);
+    img.src = imageUrl;
+    
+    // Clean up object URL after image loads
+    img.onload = (function(url) {
+      return function() {
+        try {
+          canvas.width = img.naturalWidth || img.width;
+          canvas.height = img.naturalHeight || img.height;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          
+          canvas.toBlob((blob) => {
+            URL.revokeObjectURL(url);
+            if (!blob) {
+              reject(new Error("Failed to create blob"));
+              return;
+            }
+            const originalName = file.name.replace(/\.[^/.]+$/, "");
+            const cleanFileName = originalName + "_clean.png";
+            const cleanFile = new File([blob], cleanFileName, { 
+              type: "image/png",
+              lastModified: Date.now()
+            });
+            resolve(cleanFile);
+          }, "image/png", 1.0);
+        } catch (error) {
+          URL.revokeObjectURL(url);
+          reject(error);
+        }
+      };
+    })(imageUrl);
   });
 }
 
@@ -248,7 +349,17 @@ function displayMetadata() {
   Object.entries(extractedMetadata).forEach(([key, value]) => {
     const item = document.createElement("div");
     item.className = "metadata-item";
-    item.innerHTML = '<span class="metadata-key">' + key + '</span><div><span class="metadata-value">' + value + '</span><span class="metadata-removed"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Removed</span></div>';
+    item.innerHTML = `
+      <span class="metadata-key">${key}</span>
+      <span class="metadata-value">${value}</span>
+      <span class="metadata-removed">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+        Removed
+      </span>
+    `;
     metadataList.appendChild(item);
   });
 }
@@ -284,19 +395,43 @@ function resetUI() {
   currentFile = null;
   processedFile = null;
   extractedMetadata = {};
-  if (originalImageUrl) URL.revokeObjectURL(originalImageUrl);
-  if (cleanImageUrl) URL.revokeObjectURL(cleanImageUrl);
-  originalImageUrl = null;
-  cleanImageUrl = null;
+  
+  // Clean up object URLs to prevent memory leaks
+  if (originalImageUrl) {
+    URL.revokeObjectURL(originalImageUrl);
+    originalImageUrl = null;
+  }
+  if (cleanImageUrl) {
+    URL.revokeObjectURL(cleanImageUrl);
+    cleanImageUrl = null;
+  }
+  
+  // Reset UI visibility
   if (dropZone) dropZone.style.display = "flex";
   if (processingUI) processingUI.style.display = "none";
   if (resultUI) resultUI.style.display = "none";
+  
+  // Reset file input
   if (fileInput) fileInput.value = "";
-  document.querySelectorAll(".step").forEach(step => step.classList.remove("active", "complete"));
+  
+  // Reset processing steps and progress bar
+  document.querySelectorAll(".step").forEach(step => {
+    step.classList.remove("active", "complete");
+  });
+  
   const progressFill = document.getElementById("progressFill");
-  if (progressFill) progressFill.style.width = "0%";
+  if (progressFill) {
+    progressFill.style.transition = "none";
+    progressFill.style.width = "0%";
+    // Force reflow
+    void progressFill.offsetWidth;
+    progressFill.style.transition = "width 0.6s ease";
+  }
+  
+  // Reset tabs
   document.querySelectorAll(".result-tab").forEach(t => t.classList.remove("active"));
   document.querySelectorAll(".result-tab-content").forEach(c => c.classList.remove("active"));
+  
   const firstTab = document.querySelector(".result-tab");
   const firstContent = document.querySelector(".result-tab-content");
   if (firstTab) firstTab.classList.add("active");
@@ -408,16 +543,24 @@ function resetPDFUI() {
   const dropZone = document.getElementById("pdfDropZone");
   const processingUI = document.getElementById("pdfProcessingUI");
   const resultUI = document.getElementById("pdfResultUI");
+  const fileInput = document.getElementById("pdfFileInput");
   
   if (dropZone) dropZone.style.display = "flex";
   if (processingUI) processingUI.style.display = "none";
   if (resultUI) resultUI.style.display = "none";
+  if (fileInput) fileInput.value = "";
   
   document.querySelectorAll("#pdfProcessingUI .step").forEach(step => {
     step.classList.remove("active", "complete");
   });
+  
   const progressFill = document.getElementById("pdfProgressFill");
-  if (progressFill) progressFill.style.width = "0%";
+  if (progressFill) {
+    progressFill.style.transition = "none";
+    progressFill.style.width = "0%";
+    void progressFill.offsetWidth;
+    progressFill.style.transition = "width 0.6s ease";
+  }
   
   pdfCurrentFile = null;
   pdfCleanFile = null;
@@ -542,16 +685,24 @@ function resetVideoUI() {
   const dropZone = document.getElementById("videoDropZone");
   const processingUI = document.getElementById("videoProcessingUI");
   const resultUI = document.getElementById("videoResultUI");
+  const fileInput = document.getElementById("videoFileInput");
   
   if (dropZone) dropZone.style.display = "flex";
   if (processingUI) processingUI.style.display = "none";
   if (resultUI) resultUI.style.display = "none";
+  if (fileInput) fileInput.value = "";
   
   document.querySelectorAll("#videoProcessingUI .step").forEach(step => {
     step.classList.remove("active", "complete");
   });
+  
   const progressFill = document.getElementById("videoProgressFill");
-  if (progressFill) progressFill.style.width = "0%";
+  if (progressFill) {
+    progressFill.style.transition = "none";
+    progressFill.style.width = "0%";
+    void progressFill.offsetWidth;
+    progressFill.style.transition = "width 0.6s ease";
+  }
   
   videoCurrentFile = null;
   videoCleanFile = null;
@@ -679,16 +830,24 @@ function resetAudioUI() {
   const dropZone = document.getElementById("audioDropZone");
   const processingUI = document.getElementById("audioProcessingUI");
   const resultUI = document.getElementById("audioResultUI");
+  const fileInput = document.getElementById("audioFileInput");
   
   if (dropZone) dropZone.style.display = "flex";
   if (processingUI) processingUI.style.display = "none";
   if (resultUI) resultUI.style.display = "none";
+  if (fileInput) fileInput.value = "";
   
   document.querySelectorAll("#audioProcessingUI .step").forEach(step => {
     step.classList.remove("active", "complete");
   });
+  
   const progressFill = document.getElementById("audioProgressFill");
-  if (progressFill) progressFill.style.width = "0%";
+  if (progressFill) {
+    progressFill.style.transition = "none";
+    progressFill.style.width = "0%";
+    void progressFill.offsetWidth;
+    progressFill.style.transition = "width 0.6s ease";
+  }
   
   audioCurrentFile = null;
   audioCleanFile = null;
@@ -886,16 +1045,24 @@ function resetOfficeUI() {
   const dropZone = document.getElementById("officeDropZone");
   const processingUI = document.getElementById("officeProcessingUI");
   const resultUI = document.getElementById("officeResultUI");
+  const fileInput = document.getElementById("officeFileInput");
   
   if (dropZone) dropZone.style.display = "flex";
   if (processingUI) processingUI.style.display = "none";
   if (resultUI) resultUI.style.display = "none";
+  if (fileInput) fileInput.value = "";
   
   document.querySelectorAll("#officeProcessingUI .step").forEach(step => {
     step.classList.remove("active", "complete");
   });
+  
   const progressFill = document.getElementById("officeProgressFill");
-  if (progressFill) progressFill.style.width = "0%";
+  if (progressFill) {
+    progressFill.style.transition = "none";
+    progressFill.style.width = "0%";
+    void progressFill.offsetWidth;
+    progressFill.style.transition = "width 0.6s ease";
+  }
   
   officeCurrentFile = null;
   officeCleanFile = null;
@@ -963,12 +1130,27 @@ async function animateViewerProcessing() {
   const progressFill = document.getElementById("viewerProgressFill");
   const texts = ["Reading your file...", "Scanning for metadata...", "Analyzing data structure...", "Analysis complete!"];
   
+  // Reset all steps first
+  steps.forEach(step => {
+    step.classList.remove("active", "complete");
+  });
+  if (progressFill) progressFill.style.width = "0%";
+  
   for (let i = 0; i < steps.length; i++) {
     steps[i].classList.add("active");
-    if (progressFill) progressFill.style.width = ((i + 1) / steps.length * 100) + "%";
+    
+    // Smooth progress animation
+    if (progressFill) {
+      const targetWidth = ((i + 1) / steps.length * 100);
+      progressFill.style.transition = "width 0.6s ease";
+      progressFill.style.width = targetWidth + "%";
+    }
+    
     const txt = document.getElementById("viewerProcessingText");
     if (txt) txt.textContent = texts[i];
-    await new Promise(r => setTimeout(r, 600));
+    
+    await new Promise(r => setTimeout(r, 650));
+    
     steps[i].classList.remove("active");
     steps[i].classList.add("complete");
   }
@@ -1012,14 +1194,43 @@ async function handleViewerFile(file) {
     
     const metadataDisplay = document.getElementById("viewerMetadataDisplay");
     if (metadataDisplay) {
-      metadataDisplay.innerHTML = Object.entries(viewerMetadata).map(([key, value]) => `
-        <div class="metadata-item">
-          <span class="metadata-key">${key}</span>
-          <div>
-            <span class="metadata-value">${value}</span>
+      // Organize metadata into categories
+      const categories = organizeMetadataByCategory(viewerMetadata);
+      
+      metadataDisplay.innerHTML = '';
+      
+      // Display each category
+      Object.entries(categories).forEach(([categoryName, items]) => {
+        if (items.length === 0) return;
+        
+        const categorySection = document.createElement('div');
+        categorySection.className = 'metadata-category';
+        categorySection.innerHTML = `
+          <h3 class="metadata-category-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 12l2 2 4-4"></path>
+              <circle cx="12" cy="12" r="10"></circle>
+            </svg>
+            ${categoryName}
+          </h3>
+          <div class="metadata-category-items">
+            ${items.map(([key, value]) => {
+              const isGPS = key.includes('GPS');
+              const isSensitive = isGPS || key.includes('Location') || key.includes('Latitude') || key.includes('Longitude');
+              return `
+                <div class="metadata-item ${isSensitive ? 'metadata-sensitive' : ''}">
+                  <span class="metadata-key">${key}</span>
+                  <div class="metadata-value-container">
+                    <span class="metadata-value">${value}</span>
+                    ${isGPS ? '<span class="privacy-warning">⚠️ Privacy Risk</span>' : ''}
+                  </div>
+                </div>
+              `;
+            }).join('')}
           </div>
-        </div>
-      `).join('');
+        `;
+        metadataDisplay.appendChild(categorySection);
+      });
     }
     
     // Show result UI
@@ -1033,21 +1244,79 @@ async function handleViewerFile(file) {
   }
 }
 
+// Organize metadata into logical categories
+function organizeMetadataByCategory(metadata) {
+  const categories = {
+    "📁 File Information": [],
+    "📷 Camera Information": [],
+    "⚙️ Camera Settings": [],
+    "📅 Date & Time": [],
+    "📍 GPS Location": [],
+    "🎨 Image Properties": [],
+    "💾 Software & Processing": [],
+    "📝 Additional Information": []
+  };
+  
+  const cameraInfoKeys = ["Camera Make", "Camera Model", "Lens Model"];
+  const cameraSettingsKeys = ["ISO", "Aperture", "Shutter Speed", "Focal Length", "White Balance", "Flash", "Exposure Mode", "Metering Mode"];
+  const dateKeys = ["Date/Time", "Original Date/Time", "Digitized Date/Time", "Last Modified"];
+  const gpsKeys = ["GPS Latitude", "GPS Longitude", "GPS Location", "GPS Altitude"];
+  const imageKeys = ["Image Width", "Image Height", "Aspect Ratio", "Format", "Orientation", "Color Space", "X Resolution", "Y Resolution"];
+  const softwareKeys = ["Software", "Artist/Author", "Copyright", "Editing software used"];
+  const fileKeys = ["File Name", "File Size", "File Type"];
+  
+  Object.entries(metadata).forEach(([key, value]) => {
+    if (fileKeys.includes(key)) {
+      categories["📁 File Information"].push([key, value]);
+    } else if (cameraInfoKeys.includes(key)) {
+      categories["📷 Camera Information"].push([key, value]);
+    } else if (cameraSettingsKeys.includes(key)) {
+      categories["⚙️ Camera Settings"].push([key, value]);
+    } else if (dateKeys.includes(key)) {
+      categories["📅 Date & Time"].push([key, value]);
+    } else if (gpsKeys.includes(key)) {
+      categories["📍 GPS Location"].push([key, value]);
+    } else if (imageKeys.includes(key)) {
+      categories["🎨 Image Properties"].push([key, value]);
+    } else if (softwareKeys.includes(key)) {
+      categories["💾 Software & Processing"].push([key, value]);
+    } else {
+      categories["📝 Additional Information"].push([key, value]);
+    }
+  });
+  
+  return categories;
+}
+
 function resetViewerUI() {
   const dropZone = document.getElementById("viewerDropZone");
   const processingUI = document.getElementById("viewerProcessingUI");
   const resultUI = document.getElementById("viewerResultUI");
+  const fileInput = document.getElementById("viewerFileInput");
   
+  // Reset UI visibility
   if (dropZone) dropZone.style.display = "flex";
   if (processingUI) processingUI.style.display = "none";
   if (resultUI) resultUI.style.display = "none";
   
+  // Reset file input
+  if (fileInput) fileInput.value = "";
+  
+  // Reset processing steps and progress bar
   document.querySelectorAll("#viewerProcessingUI .step").forEach(step => {
     step.classList.remove("active", "complete");
   });
-  const progressFill = document.getElementById("viewerProgressFill");
-  if (progressFill) progressFill.style.width = "0%";
   
+  const progressFill = document.getElementById("viewerProgressFill");
+  if (progressFill) {
+    progressFill.style.transition = "none";
+    progressFill.style.width = "0%";
+    // Force reflow
+    void progressFill.offsetWidth;
+    progressFill.style.transition = "width 0.6s ease";
+  }
+  
+  // Reset state
   viewerCurrentFile = null;
   viewerMetadata = {};
 }
@@ -1064,21 +1333,168 @@ async function extractImageMetadataDetailed(file) {
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
-        resolve({
+        // Basic image info
+        const metadata = {
           "Image Width": img.width + "px",
           "Image Height": img.height + "px",
           "Aspect Ratio": (img.width / img.height).toFixed(2),
-          "EXIF Data": "May contain camera info, GPS, timestamps",
-          "Color Space": "sRGB (typical)",
           "Format": file.type.split("/")[1].toUpperCase()
-        });
+        };
+        
+        // Try to extract EXIF data
+        if (typeof EXIF !== 'undefined') {
+          EXIF.getData(img, function() {
+            const allTags = EXIF.getAllTags(this);
+            
+            // Camera Information
+            if (allTags.Make) {
+              metadata["Camera Make"] = allTags.Make;
+            }
+            if (allTags.Model) {
+              metadata["Camera Model"] = allTags.Model;
+            }
+            if (allTags.LensModel) {
+              metadata["Lens Model"] = allTags.LensModel;
+            }
+            
+            // Camera Settings
+            if (allTags.ISO || allTags.ISOSpeedRatings) {
+              metadata["ISO"] = allTags.ISO || allTags.ISOSpeedRatings;
+            }
+            if (allTags.FNumber) {
+              metadata["Aperture"] = "f/" + allTags.FNumber;
+            }
+            if (allTags.ExposureTime) {
+              const exposure = allTags.ExposureTime;
+              metadata["Shutter Speed"] = exposure < 1 ? "1/" + Math.round(1/exposure) + "s" : exposure + "s";
+            }
+            if (allTags.FocalLength) {
+              metadata["Focal Length"] = allTags.FocalLength + "mm";
+            }
+            if (allTags.WhiteBalance) {
+              metadata["White Balance"] = allTags.WhiteBalance === 0 ? "Auto" : "Manual";
+            }
+            if (allTags.Flash) {
+              const flashValue = allTags.Flash;
+              metadata["Flash"] = (flashValue & 1) ? "Flash fired" : "Flash did not fire";
+            }
+            
+            // Date and Time
+            if (allTags.DateTime) {
+              metadata["Date/Time"] = allTags.DateTime;
+            }
+            if (allTags.DateTimeOriginal) {
+              metadata["Original Date/Time"] = allTags.DateTimeOriginal;
+            }
+            if (allTags.DateTimeDigitized) {
+              metadata["Digitized Date/Time"] = allTags.DateTimeDigitized;
+            }
+            
+            // GPS Location
+            if (allTags.GPSLatitude && allTags.GPSLongitude) {
+              const lat = convertDMSToDD(
+                allTags.GPSLatitude[0], 
+                allTags.GPSLatitude[1], 
+                allTags.GPSLatitude[2], 
+                allTags.GPSLatitudeRef
+              );
+              const lon = convertDMSToDD(
+                allTags.GPSLongitude[0], 
+                allTags.GPSLongitude[1], 
+                allTags.GPSLongitude[2], 
+                allTags.GPSLongitudeRef
+              );
+              metadata["GPS Latitude"] = lat.toFixed(6) + "° " + allTags.GPSLatitudeRef;
+              metadata["GPS Longitude"] = lon.toFixed(6) + "° " + allTags.GPSLongitudeRef;
+              metadata["GPS Location"] = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+            }
+            if (allTags.GPSAltitude) {
+              metadata["GPS Altitude"] = allTags.GPSAltitude + "m";
+            }
+            
+            // Software and Processing
+            if (allTags.Software) {
+              metadata["Software"] = allTags.Software;
+            }
+            if (allTags.Artist) {
+              metadata["Artist/Author"] = allTags.Artist;
+            }
+            if (allTags.Copyright) {
+              metadata["Copyright"] = allTags.Copyright;
+            }
+            
+            // Image Settings
+            if (allTags.Orientation) {
+              const orientations = {
+                1: "Normal",
+                2: "Mirrored",
+                3: "Rotated 180°",
+                4: "Mirrored and Rotated 180°",
+                5: "Mirrored and Rotated 90° CCW",
+                6: "Rotated 90° CW",
+                7: "Mirrored and Rotated 90° CW",
+                8: "Rotated 90° CCW"
+              };
+              metadata["Orientation"] = orientations[allTags.Orientation] || allTags.Orientation;
+            }
+            if (allTags.ColorSpace) {
+              metadata["Color Space"] = allTags.ColorSpace === 1 ? "sRGB" : "Uncalibrated";
+            }
+            if (allTags.ExposureMode) {
+              const modes = {0: "Auto", 1: "Manual", 2: "Auto Bracket"};
+              metadata["Exposure Mode"] = modes[allTags.ExposureMode] || allTags.ExposureMode;
+            }
+            if (allTags.MeteringMode) {
+              const modes = {
+                0: "Unknown", 1: "Average", 2: "Center-weighted average",
+                3: "Spot", 4: "Multi-spot", 5: "Multi-segment", 6: "Partial"
+              };
+              metadata["Metering Mode"] = modes[allTags.MeteringMode] || allTags.MeteringMode;
+            }
+            
+            // Resolution
+            if (allTags.XResolution) {
+              metadata["X Resolution"] = allTags.XResolution + " dpi";
+            }
+            if (allTags.YResolution) {
+              metadata["Y Resolution"] = allTags.YResolution + " dpi";
+            }
+            
+            // Additional info
+            if (allTags.ImageDescription) {
+              metadata["Description"] = allTags.ImageDescription;
+            }
+            if (allTags.UserComment) {
+              metadata["User Comment"] = allTags.UserComment;
+            }
+            
+            resolve(metadata);
+          });
+        } else {
+          // Fallback if EXIF library is not loaded
+          metadata["EXIF Status"] = "EXIF library not loaded - showing basic info only";
+          resolve(metadata);
+        }
       };
-      img.onerror = () => resolve({});
+      img.onerror = () => resolve({
+        "Error": "Failed to load image"
+      });
       img.src = e.target.result;
     };
-    reader.onerror = () => resolve({});
+    reader.onerror = () => resolve({
+      "Error": "Failed to read file"
+    });
     reader.readAsDataURL(file);
   });
+}
+
+// Helper function to convert GPS coordinates from DMS to Decimal Degrees
+function convertDMSToDD(degrees, minutes, seconds, direction) {
+  let dd = degrees + minutes/60 + seconds/3600;
+  if (direction === "S" || direction === "W") {
+    dd = dd * -1;
+  }
+  return dd;
 }
 
 // ============================================
