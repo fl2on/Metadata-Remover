@@ -238,6 +238,87 @@ main {
     animation: gradient 8s ease infinite, fadeInUp 0.8s ease-out 0.2s both;
 }
 
+/* Sparkle Container */
+.sparkle-container {
+    position: relative;
+    display: inline-block;
+}
+
+.sparkle {
+    pointer-events: none;
+    position: absolute;
+    z-index: 20;
+    opacity: 0;
+    animation: sparkleAnimation 3s ease-in-out infinite;
+}
+
+.sparkle-1 {
+    left: 71.5%;
+    top: 40%;
+    animation-delay: 0s;
+    transform: scale(0.7) rotate(128deg);
+}
+
+.sparkle-2 {
+    left: 15%;
+    top: 25%;
+    animation-delay: 0.5s;
+    transform: scale(0.5) rotate(45deg);
+}
+
+.sparkle-3 {
+    left: 85%;
+    top: 65%;
+    animation-delay: 1s;
+    transform: scale(0.8) rotate(200deg);
+}
+
+.sparkle-4 {
+    left: 30%;
+    top: 70%;
+    animation-delay: 1.5s;
+    transform: scale(0.6) rotate(310deg);
+}
+
+.sparkle-5 {
+    left: 92%;
+    top: 15%;
+    animation-delay: 2s;
+    transform: scale(0.55) rotate(90deg);
+}
+
+.sparkle-6 {
+    left: 80%;
+    top: 4%;
+    animation-delay: 2.5s;
+    transform: scale(0.22) rotate(104deg);
+}
+
+.sparkle-7 {
+    left: 50%;
+    top: 80%;
+    animation-delay: 0.8s;
+    transform: scale(0.65) rotate(220deg);
+}
+
+.sparkle-8 {
+    left: 5%;
+    top: 50%;
+    animation-delay: 1.8s;
+    transform: scale(0.45) rotate(270deg);
+}
+
+@keyframes sparkleAnimation {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1) rotate(180deg);
+    }
+}
+
 @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
