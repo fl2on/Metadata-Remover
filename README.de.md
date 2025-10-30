@@ -10,9 +10,9 @@ Wichtiger Hinweis: Ich habe keine Rechte an den Bildern, ich verwende sie nur zu
 
 # Übersetzung
 
-| 🇺🇸                 | 🇨🇳                                        | 🇹🇼                                         | 🇮🇳                  | 🇫🇷                        | 🇦🇪                 | 🇩🇪                    | 🇯🇵                | 🇪🇸                     |
-| -------------------- | ------------------------------------------- | -------------------------------------------- | --------------------- | --------------------------- | -------------------- | ----------------------- | ------------------- | ------------------------ |
-| [English](README.md) | [Vereinfachtes Chinesisch](README.zh-CN.md) | [Traditionelles Chinesisch](README.zh-TW.md) | [Hindi](README.hi.md) | [Französisch](README.fr.md) | [عربى](README.ar.md) | [Deutsch](README.de.md) | [日本語](README.ja.md) | [Spanisch](README.es.md) |
+| 🇺🇸                  | 🇨🇳                                        | 🇹🇼                                         | 🇮🇳                  | 🇫🇷                        | 🇦🇪                   | 🇩🇪                    | 🇯🇵                      | 🇪🇸                     |
+| --------------------- | ------------------------------------------- | -------------------------------------------- | --------------------- | --------------------------- | ---------------------- | ----------------------- | ------------------------- | ------------------------ |
+| [Englisch](README.md) | [Vereinfachtes Chinesisch](README.zh-CN.md) | [Traditionelles Chinesisch](README.zh-TW.md) | [Hindi](README.hi.md) | [Französisch](README.fr.md) | [Araber](README.ar.md) | [Deutsch](README.de.md) | [japanisch](README.ja.md) | [Spanisch](README.es.md) |
 
 ## Vitrine
 
