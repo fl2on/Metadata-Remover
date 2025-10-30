@@ -14,11 +14,11 @@
 | --------------- | ----------------------- | ----------------------- | ------------------- | ------------------ | ------------------- | ------------------ | ------------------- | -------------------- |
 | [英语](README.md) | [简体中文](README.zh-CN.md) | [繁体中文](README.zh-TW.md) | [印地语](README.hi.md) | [法语](README.fr.md) | [阿拉伯](README.ar.md) | [德语](README.de.md) | [日本人](README.ja.md) | [西班牙语](README.es.md) |
 
-## Showcase
+## 展示柜
 
 <https://user-images.githubusercontent.com/69091361/235879077-83f84826-f807-4240-9c44-1ab254aaf1b8.mp4>
 
-## Website ScreenShot
+## 网站截图
 
 ![image](https://github.com/user-attachments/assets/5dfaf64c-2672-4777-a78b-c222838a3de7)
 
