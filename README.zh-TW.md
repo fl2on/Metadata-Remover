@@ -1,18 +1,18 @@
 ![image](https://github.com/user-attachments/assets/af677ca5-b660-4bb7-9421-fde3bf73dd7f)
 
-# 元數據刪除器
+# 元資料刪除器
 
-該應用程序是一個命令行工具，用於刪除選定目錄中的圖像元數據。該應用程序允許用戶選擇要刪除哪些元數據配置文件或全部刪除。輸出圖像的質量也可以調整。處理每個文件後，應用程序將不帶元數據的新圖像寫入原始圖像目錄中的子目錄“Wi​​thoutMetadata”。該應用程序具有簡單的用戶界面，並使用 ImageMagick 庫來處理圖像。
+This application is a command line tool used to remove image metadata in a selected directory. The application allows the user to choose which metadata profiles to delete or delete them all. The quality of the output image can also be adjusted. After processing each file, the application writes the new image without metadata to a subdirectory "WithoutMetadata" within the original directory of images. The application has a simple user interface and uses the ImageMagick library to process the images.
 
 # 警告⚠️
 
-重要信息 我對這些圖像沒有任何權利，我僅將它們用於演示目的。
+重要資訊 我對這些圖像沒有任何權利，我僅將它們用於演示目的。
 
 # 翻譯
 
-| 🇺🇸            | 🇨🇳                    | 🇹🇼                    | 🇮🇳                | 🇫🇷               | 🇦🇪                 | 🇩🇪               | 🇯🇵                | 🇪🇸                 |
-| --------------- | ----------------------- | ----------------------- | ------------------- | ------------------ | -------------------- | ------------------ | ------------------- | -------------------- |
-| [英語](README.md) | [簡體中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [印地語](README.hi.md) | [法語](README.fr.md) | [عربى](README.ar.md) | [德語](README.de.md) | [日本人](README.ja.md) | [西班牙語](README.es.md) |
+| 🇺🇸            | 🇨🇳                    | 🇹🇼                    | 🇮🇳                | 🇫🇷               | 🇦🇪                | 🇩🇪               | 🇯🇵                | 🇪🇸                 |
+| --------------- | ----------------------- | ----------------------- | ------------------- | ------------------ | ------------------- | ------------------ | ------------------- | -------------------- |
+| [英語](README.md) | [簡體中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [印地語](README.hi.md) | [法語](README.fr.md) | [阿拉伯](README.ar.md) | [德文](README.de.md) | [日本人](README.ja.md) | [西班牙語](README.es.md) |
 
 ## 展示櫃
 
@@ -28,4 +28,4 @@
 
 ## 執照
 
-[阿帕奇2.0](https://choosealicense.com/licenses/apache-2.0/)
+[阿帕契2.0](https://choosealicense.com/licenses/apache-2.0/)
