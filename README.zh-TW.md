@@ -2,7 +2,7 @@
 
 # 元資料刪除器
 
-This application is a command line tool used to remove image metadata in a selected directory. The application allows the user to choose which metadata profiles to delete or delete them all. The quality of the output image can also be adjusted. After processing each file, the application writes the new image without metadata to a subdirectory "WithoutMetadata" within the original directory of images. The application has a simple user interface and uses the ImageMagick library to process the images.
+該應用程式是一個命令列工具，用於刪除選定目錄中的影像元資料。該應用程式允許用戶選擇要刪除哪些元資料設定檔或全部刪除。輸出影像的品質也可以調整。處理每個檔案後，應用程式將不帶元資料的新影像寫入原始影像目錄中的子目錄「WithoutMetadata」。該應用程式具有簡單的用戶介面，並使用 ImageMagick 庫來處理圖像。
 
 # 警告⚠️
 
