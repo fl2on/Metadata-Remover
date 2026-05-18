@@ -1,6 +1,6 @@
 ![image](https://github.com/user-attachments/assets/af677ca5-b660-4bb7-9421-fde3bf73dd7f)
 
-# Eliminador de metadatos
+# Metadata Remover
 
 Esta aplicación es una herramienta de línea de comandos que se utiliza para eliminar metadatos de imágenes en un directorio seleccionado. La aplicación permite al usuario elegir qué perfiles de metadatos eliminar o eliminarlos todos. También se puede ajustar la calidad de la imagen de salida. Después de procesar cada archivo, la aplicación escribe la nueva imagen sin metadatos en un subdirectorio "SinMetadatos" dentro del directorio original de imágenes. La aplicación tiene una interfaz de usuario sencilla y utiliza la biblioteca ImageMagick para procesar las imágenes.
 
